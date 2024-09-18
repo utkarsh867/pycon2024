@@ -17,11 +17,11 @@ class ControlNode(Node):
             depth=1,
         )
 
-        self.vehicle_cmd_publisher = self.create_publisher(
-            VehicleCommand, "/fmu/in/vehicle_command", qos_profile
-        )
         self.offboard_control_publisher = self.create_publisher(
             OffboardControlMode, "/fmu/in/offboard_control_mode", qos_profile
+        )
+        self.vehicle_cmd_publisher = self.create_publisher(
+            VehicleCommand, "/fmu/in/vehicle_command", qos_profile
         )
         self.thrust_pub = self.create_publisher(
             VehicleThrustSetpoint, "/fmu/in/vehicle_thrust_setpoint", qos_profile
@@ -34,7 +34,7 @@ class ControlNode(Node):
         )
         self.arm_state = False
 
-        self.create_timer(1.0, self.offboard_control_callback)
+        self.create_timer(0.1, self.offboard_control_callback)
         self.create_timer(0.001, self.move_forward)
 
         self.arm_vehicle()
